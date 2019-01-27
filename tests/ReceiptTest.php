@@ -38,8 +38,10 @@ class ReceiptTest extends TestCase {
         $inputAmount = 10.00;
         $taxInput = 0.10;
         $output = $this->Receipt->tax($inputAmount, $taxInput);
+        //To make sure the expected and final data are equal
         $this->assertEquals(
             1.00,
+            //If real result doesn't equal to the expected result
             $output,
             'The tax calculation should equal 1.00'
         );
