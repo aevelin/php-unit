@@ -23,18 +23,31 @@ class ReceiptTest extends TestCase {
         unset($this->Receipt);
     }
 
-    public function testTotal() {
-        //Array called input
-        $input = [0,2,5,8];
-        //This null value will be the dummy object
+    /**
+     * @dataProvider provideTotal
+     */
+
+    //Adding new parameters
+    public function testTotal($items, $expected) {
         $coupon = null;
-        //Variable $coupon added
-        $output = $this->Receipt->total($input, $coupon);
+        //Variable items added
+        $output = $this->Receipt->total($items, $coupon);
         $this->assertEquals(
-            15,
+            //Replacements with expected variable
+            $expected,
             $output,
-            'When summing the total should equal 15'
+            "When summing the total should equal {$expected}"
         );
+    }
+
+    //Adding provider function
+    public function provideTotal() {
+        //Returning an array
+        return [
+            [[1,2,5,8], 16],
+            [[-1,2,5,8], 14],
+            [[1,2,8], 11],
+        ];
     }
 
     //Change the name of the method by adding AndCoupon
