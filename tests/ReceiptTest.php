@@ -51,18 +51,26 @@ class ReceiptTest extends TestCase {
 
     //Building a mock instance
     public function testPostTaxTotal() {
+        //Items array
+        $items = [1,2,5,8];
+        //Adding tax amount
+        $tax = 0.20;
+        //Adding coupon value
+        $coupon = null;
         //Building a mock PHPUnit
         $Receipt = $this->getMockBuilder('TDD\Receipt')
             //Define the methods that the stub will respond to
             ->setMethods(['tax', 'total'])
             //Return the instance of the mock
             ->getMock();
-        //Stub to respond to two method calls for tax and total
-        $Receipt->method('total')
-            //Call a method will
+        //Methods called once
+        $Receipt->expects($this->once())
+            ->method('total')
+            ->with($items, $coupon)
             ->will($this->returnValue(10.00));
-        $Receipt->method('tax')
-            //Call a method will
+        $Receipt->expects($this->once())
+            ->method('tax')
+            ->with(10.00, $tax)
             ->will($this->returnValue(1.00));
         //Call the method and assert the result that is expected
         $result = $Receipt->postTaxTotal([1,2,5,8], 0.20, null);
